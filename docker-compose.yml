@@ -1,0 +1,19 @@
+version: '3.0'
+services:
+  todo_app:
+    build: .
+    ports:
+      - 5000:5000
+    volumes:
+      - ./.env:/app/.env
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    restart: always
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
+    env_file: .env
