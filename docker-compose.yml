@@ -1,13 +1,13 @@
 version: '3.0'
 services:
-  todo_app:
-    build: .
-    ports:
-      - 5000:5000
-    volumes:
-      - ./.env:/app/.env
-    depends_on:
-      - postgres
+#  todo_app:
+#    build: .
+#    ports:
+#      - 5000:5000
+#    volumes:
+#      - ./.env:/app/.env
+#    depends_on:
+#      - postgres
 
   postgres:
     image: postgres
