@@ -1,28 +1,41 @@
-import { Request, Response } from "express";
-import { find, create } from "../services/todoService";
+import { Request, Response, Router } from "express";
+import { TodoService } from "../services/todoService";
+import dtoValidationMiddleware from "../middlewares/dtoValidationMiddleware";
+import {RequestTodoDto} from "../entity/todo/dto/requestTodoDto";
 
-export const getTodo = async (req: Request, res: Response): Promise<void> => {
-  res.send(await find());
-};
+export class TodoController {
+  public router: Router;
+  private todoService: TodoService;
+  private path = "/todos";
 
-export const createTodo = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  console.log(req.body);
-  res.send(await create(req.body));
-};
+  constructor() {
+    this.router = Router();
+    this.todoService = new TodoService();
+    this.routes();
+  }
 
-export const updateTodo = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  // res.render("index", { title: "Express" });
-};
+  public find = async (req: Request, res: Response) => {
+    res.send( await this.todoService.find());
+  };
 
-export const deleteTodo = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  // res.render("index", { title: "Express" });
-};
+  public create = (req: Request, res: Response) => {
+    console.log(req);
+    // res.send(this.todoService.create(req));
+  };
+
+  public update = (req: Request, res: Response) => {
+    console.log(req.params.id);
+    res.send(this.todoService.update());
+  };
+
+  public delete = (req: Request, res: Response) => {
+    res.send(this.todoService.delete());
+  };
+
+  public routes() {
+    this.router.get(`${this.path}`, this.find);
+    this.router.post(`${this.path}`, this.create);
+    this.router.patch(`${this.path}/:id`, this.update);
+    this.router.delete(`${this.path}/:id`, this.delete);
+  }
+}

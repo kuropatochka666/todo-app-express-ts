@@ -29,7 +29,8 @@ function onError(error: NodeJS.ErrnoException) {
 
 function onListening() {
   const addr = server.address();
-  const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
+  const bind =
+      typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
   console.log(`Listening on ${bind}`);
 }
 

@@ -5,7 +5,7 @@ import {
   BaseEntity,
   ManyToOne,
 } from "typeorm";
-import { User } from "./user";
+import { User } from "../user/user";
 
 @Entity("todos")
 export class Todo {
